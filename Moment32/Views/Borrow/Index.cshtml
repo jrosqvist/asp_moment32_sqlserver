@@ -1,0 +1,47 @@
+@model IEnumerable<Moment32.Models.Borrow>
+
+@{
+    ViewData["Title"] = "Lånade CD-skivor";
+}
+
+<h1>Lånade CD-skivor</h1>
+
+<p>
+    <a asp-action="Create">Lägg till lån</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BorrowDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cd)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cd.Genre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Låneinformation</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

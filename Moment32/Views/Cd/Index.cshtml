@@ -1,0 +1,71 @@
+@model IEnumerable<Moment32.Models.Cd>
+
+@{
+    ViewData["Title"] = "CD-skivor";
+}
+
+<h1>CD-skivor</h1>
+
+<p>
+    <a asp-action="Create">Lägg till ny</a>
+</p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Sök efter artist, titel eller genre <br />
+            <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Sök" class="btn btn-primary" /> |
+            <a asp-action="Index">Visa alla</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ArtistSort"]"> @Html.DisplayNameFor(model => model.Artist)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSort"]">@Html.DisplayNameFor(model => model.Title)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleaseYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoOfSongs)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfSongs)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
