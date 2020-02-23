@@ -8,6 +8,7 @@ namespace Moment32.Models
     {
         public Cd()
         {
+            Borrowed = false;
         }
 
         public int Id { get; set; }
@@ -38,6 +39,8 @@ namespace Moment32.Models
         [Range(1, 250, ErrorMessage = "Minst 1 och max 250 låtar")]
         [Required(ErrorMessage = "Obligatoriskt fält!")]
         public int NoOfSongs { get; set; }
+
+        public Boolean Borrowed { get; set; }
 
         public ICollection<Borrow> Borrows { get; set; }
       

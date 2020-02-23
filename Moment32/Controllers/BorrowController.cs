@@ -48,7 +48,20 @@ namespace Moment32.Controllers
         // GET: Borrow/Create
         public IActionResult Create()
         {
-            ViewData["CdId"] = new SelectList(_context.Cd, "Id", "Title");
+
+            // Hämtar alla skivor som inte redan är utlånade
+            var cdContext = _context.Cd.Where(s => s.Borrowed == false)
+                .Select(s => s).ToList();
+
+            foreach (var c in cdContext)
+            {
+                c.Title += " - " + c.ReleaseYear;
+            }
+
+            // Lägger till dem i formuläret
+            ViewData["CdId"] = new SelectList(cdContext, "Id", "Title");
+            //ViewData["CdId"] = new SelectList(_context.Cd, "Id", "Title");
+
             return View();
         }
 
@@ -61,6 +74,18 @@ namespace Moment32.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Hämtar posten med samma ID som angivet
+                var query =
+                   from c in _context.Cd
+                   where c.Id == borrow.CdId
+                   select c;
+
+                // Ändrar status till utlånad
+                foreach (var c in query)
+                {
+                    c.Borrowed = true;
+                }
+
                 _context.Add(borrow);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -82,7 +107,17 @@ namespace Moment32.Controllers
             {
                 return NotFound();
             }
-            ViewData["CdId"] = new SelectList(_context.Cd, "Id", "Title", borrow.CdId);
+
+            // Hämtar alla skivor som inte redan är utlånade
+            var cdContext = _context.Cd.Where(s => s.Borrowed == false
+                || s.Id == borrow.CdId
+                ).Select(s => s);
+
+            var cdList = cdContext.ToList();
+
+            // Lägger till dem i formuläret
+            ViewData["CdId"] = new SelectList(cdList, "Id", "Title", borrow.CdId);
+            //ViewData["CdId"] = new SelectList(_context.Cd, "Id", "Title", borrow.CdId);
             return View(borrow);
         }
 

@@ -63,7 +63,11 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Radera</a> |
+                @if(item.Borrowed == true)
+                {
+                    <p class="text-danger">Utlånad!</p>
+                }
             </td>
         </tr>
 }

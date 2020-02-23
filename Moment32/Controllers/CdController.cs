@@ -57,12 +57,6 @@ namespace Moment32.Controllers
             }
             return View(await cdContext.AsNoTracking().ToListAsync());
 
-
-
-            /*
-            var cdContext = _context.Cd.Include(c => c.Artist);
-            return View(await cdContext.ToListAsync());
-            */
         }
 
         // GET: Cd/Details/5
