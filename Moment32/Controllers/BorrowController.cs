@@ -51,7 +51,8 @@ namespace Moment32.Controllers
 
             // Hämtar alla skivor som inte redan är utlånade
             var cdContext = _context.Cd.Where(s => s.Borrowed == false)
-                .Select(s => s).ToList();
+                .Select(s => s)
+                .ToList();
 
             foreach (var c in cdContext)
             {

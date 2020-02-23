@@ -22,14 +22,18 @@ namespace Moment32.Controllers
         // GET: Cd
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
+            // Söksträng
+            ViewData["CurrentFilter"] = searchString;
 
+            // Sortering
             ViewData["ArtistSort"] = String.IsNullOrEmpty(sortOrder) ? "artist_desc" : "";
             ViewData["TitleSort"] = sortOrder == "Title" ? "title_desc" : "Title";
-            ViewData["CurrentFilter"] = searchString;
+            
 
             var cdContext = from s in _context.Cd.Include(c => c.Artist)
                             select s;
 
+            // Hämtar olika rader beroende på input
             if (!String.IsNullOrEmpty(searchString))
             {
                 cdContext = cdContext.Where(s => s.Artist.Name.Contains(searchString)
