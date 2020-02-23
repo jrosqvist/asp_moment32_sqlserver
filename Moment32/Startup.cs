@@ -27,8 +27,12 @@ namespace Moment32
         {
             services.AddControllersWithViews();
 
+            /*
             services.AddDbContext<CdContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultDbString")));
+                */
+            services.AddDbContext<CdContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultDbString")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
