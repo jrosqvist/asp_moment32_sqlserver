@@ -47,7 +47,7 @@ namespace Moment32.Controllers
             switch (sortOrder)
             {
                 case "artist_desc":
-                    cdContext  = cdContext.OrderByDescending(s => s.Artist);
+                    cdContext  = cdContext.OrderByDescending(s => s.Artist.Name);
                     break;
                 case "Title":
                     cdContext = cdContext.OrderBy(s => s.Title);
@@ -56,7 +56,7 @@ namespace Moment32.Controllers
                     cdContext = cdContext.OrderByDescending(s => s.Title);
                     break;
                 default:
-                    cdContext = cdContext.OrderBy(s => s.Artist);
+                    cdContext = cdContext.OrderBy(s => s.Artist.Name);
                     break;
             }
             return View(await cdContext.AsNoTracking().ToListAsync());
